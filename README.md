@@ -11,14 +11,13 @@ public class ShamirSecretRecovery {
             JSONParser parser = new JSONParser();
             JSONObject jsonObject = (JSONObject) parser.parse(new FileReader("input.json"));
 
-            // Extract n and k
             int n = Integer.parseInt(jsonObject.get("n").toString());
             int k = Integer.parseInt(jsonObject.get("k").toString());
 
-            // Store roots/points
+           
             List<Point> points = new ArrayList<>();
 
-            // Decode roots
+           
             for (int i = 1; i <= n; i++) {
                 JSONObject rootData = (JSONObject) jsonObject.get(String.valueOf(i));
                 
@@ -30,7 +29,6 @@ public class ShamirSecretRecovery {
                 points.add(new Point(x, y));
             }
 
-            // Recover Secret using Lagrange Interpolation
             int secret = recoverSecret(points, k);
             System.out.println("Secret: " + secret);
 
@@ -38,13 +36,9 @@ public class ShamirSecretRecovery {
             e.printStackTrace();
         }
     }
-
-    // Decode value from different bases
     static int decodeValue(String value, int base) {
         return Integer.parseInt(value, base);
     }
-
-    // Lagrange Interpolation to recover secret
     static int recoverSecret(List<Point> points, int k) {
         int secret = 0;
         
@@ -55,8 +49,6 @@ public class ShamirSecretRecovery {
         
         return secret;
     }
-
-    // Calculate Lagrange interpolation term
     static int calculateLagrangeTerm(List<Point> points, int index) {
         Point currentPoint = points.get(index);
         int numerator = 1;
@@ -72,8 +64,6 @@ public class ShamirSecretRecovery {
         
         return (currentPoint.y * numerator) / denominator;
     }
-
-    // Point class to represent (x, y) coordinates
     static class Point {
         int x, y;
         
